@@ -1,4 +1,7 @@
-// @ts-check
+// No @ts-check here: @bundu/ui/tailwind-preset has no type declarations for
+// that subpath export, and `astro check` (tsconfig includes "**/*") would
+// otherwise fail the build on an untyped import from a file we don't
+// control.
 import preset from '@bundu/ui/tailwind-preset';
 
 /** @type {import('tailwindcss').Config} */
