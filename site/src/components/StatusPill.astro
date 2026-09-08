@@ -4,20 +4,12 @@
 interface Props { state: 'live' | 'building' | 'planned' }
 const { state } = Astro.props;
 const label = { live: 'Live', building: 'Building', planned: 'Planned' }[state];
+const classes = {
+  live: 'bg-sodalite-container text-sodalite-on-container',
+  building: 'bg-terracotta-container text-terracotta-on-container',
+  planned: 'border border-border text-muted-foreground',
+}[state];
 ---
-<span class:list={['pill', state]}>{label}</span>
-<style>
-  .pill {
-    display: inline-block;
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.22em 0.6em;
-    border-radius: 2px;
-    white-space: nowrap;
-  }
-  .live     { background: var(--sodalite-q); color: var(--sodalite); }
-  .building { background: var(--ochre-q);    color: var(--ochre); }
-  .planned  { background: transparent; color: var(--granite); border: 1px solid var(--hairline); }
-</style>
+<span class:list={['inline-block rounded-full px-3 py-0.5 text-caption font-semibold uppercase tracking-wider', classes]}>
+  {label}
+</span>

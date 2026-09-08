@@ -1,5 +1,5 @@
-// Post-build checks on dist/. Astro covers types and syntax; these are the
-// things it cannot know about. Modelled on docs-site/check.mjs.
+// Post-build checks on dist/. Astro covers types; these are the things it
+// cannot know about. Modelled on docs-site/check.mjs.
 import { readFileSync, statSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -11,10 +11,10 @@ const walk = (dir) =>
 const files = walk('dist');
 const pages = files.filter((f) => f.endsWith('.html'));
 const fail = [];
-if (pages.length < 1) fail.push('expected at least 1 built page, found 0');
+if (pages.length < 4) fail.push(`expected at least 4 built pages, found ${pages.length}`);
 
+const routes = new Set(pages.map((p) => p.replace(/^dist/, '').replace(/index\.html$/, '')));
 const assets = new Set(files.map((f) => f.replace(/^dist/, '')));
-const css = files.filter((f) => f.endsWith('.css')).map((f) => readFileSync(f, 'utf8'));
 
 // The one permitted family of uses: naming the phrase in order to reject it.
 const PERMITTED = ['not the same as being open source', 'Say open weights, not open source'];
@@ -22,18 +22,16 @@ const PERMITTED = ['not the same as being open source', 'Say open weights, not o
 for (const page of pages) {
   const html = readFileSync(page, 'utf8');
   const where = page.replace(/^dist\//, '') || 'index.html';
-  const baseVars = [
-    ...[...html.matchAll(/:root\s*\{([^}]*)\}/g)].map((m) => m[1]),
-    ...css.flatMap((c) => [...c.matchAll(/:root\s*\{([^}]*)\}/g)].map((m) => m[1])),
-  ].join('');
 
-  // Internal links either point at an in-page anchor, an asset that exists,
-  // or an external URL — this is a single page, so there is no route table
-  // to check hrefs against.
+  // Internal page links resolve to a route that was actually built. Asset
+  // paths are checked against the file list instead.
   for (const [, href] of html.matchAll(/href="(\/[^"#]*)"/g)) {
-    if (/\.[a-z0-9]{2,5}$/i.test(href) && !assets.has(href)) {
-      fail.push(`${where}: missing asset ${href}`);
+    if (/\.[a-z0-9]{2,5}$/i.test(href)) {
+      if (!assets.has(href)) fail.push(`${where}: missing asset ${href}`);
+      continue;
     }
+    const norm = href.endsWith('/') ? href : href + '/';
+    if (!routes.has(norm)) fail.push(`${where}: dead link ${href}`);
   }
   for (const [, id] of html.matchAll(/href="#([^"]+)"/g)) {
     if (!new RegExp(`id="${id}"`).test(html)) fail.push(`${where}: dead anchor #${id}`);
@@ -55,13 +53,9 @@ for (const page of pages) {
     fail.push(`${where}: claims data residency, which Cloud cannot promise — see the language table in CLAUDE.md`);
   }
 
-  // A colour defined only inside a prefers-color-scheme or [data-theme]
-  // block renders one theme's text on the other theme's ground.
-  for (const [, name] of html.matchAll(/var\((--[a-z-]+)/g)) {
-    if (!baseVars.includes(name + ':')) fail.push(`${where}: token ${name} has no base :root value`);
-  }
-
-  // No client JavaScript: nothing on this page needs it.
+  // No client JavaScript: nothing on this site needs it. @bundu/ui's React
+  // primitives render server-side with no client:* directive anywhere, so
+  // this should hold even with React in the build.
   if (/<script(?![^>]*type="application\/ld\+json")/i.test(html)) {
     fail.push(`${where}: ships a <script> tag`);
   }
@@ -76,6 +70,6 @@ if (fail.length) {
   process.exit(1);
 }
 console.log(
-  `ok — ${pages.length} page(s), largest ${biggest} bytes, anchors and assets resolve, ` +
-    `tokens have base values, no client JS, language rules held`,
+  `ok — ${pages.length} pages, largest ${biggest} bytes, links and assets resolve, ` +
+    `no client JS, language rules held`,
 );

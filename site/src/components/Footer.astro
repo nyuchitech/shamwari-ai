@@ -1,0 +1,92 @@
+---
+import SocialIcon from '@bundu/ui/SocialIcon.astro';
+
+const explore = [
+  { href: '/', label: 'Home' },
+  { href: '/blueprint/', label: 'Blueprint' },
+  { href: '/project/', label: 'Project' },
+  { href: 'https://docs.shamwari.ai', label: 'Documentation', external: true },
+];
+
+const ecosystem = [
+  { href: 'https://bundu.org', label: 'Bundu Foundation' },
+  { href: 'https://nyuchi.com', label: 'Nyuchi Africa' },
+  { label: 'Mukoko' },
+];
+---
+<footer class="border-t border-border bg-secondary">
+  <div class="container-custom grid grid-cols-1 gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
+    <div>
+      <a href="/" class="flex items-baseline gap-2 font-serif text-h5 font-semibold text-foreground no-underline">
+        Shamwari <span class="font-sans text-caption font-semibold uppercase tracking-widest text-primary">AI</span>
+      </a>
+      <p class="mt-4 max-w-xs text-body-sm text-muted-foreground">
+        An AI companion built in Zimbabwe. Community pillar of the Bundu Ecosystem.
+      </p>
+      <div class="mt-4 flex gap-1">
+        <SocialIcon url="https://github.com/bundu-labs/shamwari" label="Shamwari on GitHub" />
+      </div>
+    </div>
+
+    <div>
+      <p class="eyebrow">Explore</p>
+      <ul class="space-y-2">
+        {explore.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              target={item.external ? '_blank' : undefined}
+              rel={item.external ? 'noopener noreferrer' : undefined}
+              class="text-body-sm text-muted-foreground no-underline hover:text-foreground"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <p class="eyebrow">Ecosystem</p>
+      <ul class="space-y-2">
+        {ecosystem.map((item) => (
+          <li class="text-body-sm text-muted-foreground">
+            {item.href ? (
+              <a href={item.href} target="_blank" rel="noopener noreferrer" class="no-underline hover:text-foreground">
+                {item.label}
+              </a>
+            ) : (
+              item.label
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <p class="eyebrow">Get in touch</p>
+      <ul class="space-y-2">
+        <li>
+          <a href="mailto:hello@shamwari.ai" class="text-body-sm text-muted-foreground no-underline hover:text-foreground">
+            hello@shamwari.ai
+          </a>
+        </li>
+        <li>
+          <a href="/contact/" class="text-body-sm text-muted-foreground no-underline hover:text-foreground">
+            Contact page
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-border">
+    <div class="container-custom flex flex-col gap-2 py-6 text-body-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+      <p class="max-w-2xl">
+        Shamwari is Shona for <em>friend</em>. Bundu Foundation intellectual property,
+        sold commercially under Nyuchi Africa.
+      </p>
+      <p>Platform code is Apache-2.0. Third-party model and corpus terms are recorded separately.</p>
+    </div>
+  </div>
+</footer>

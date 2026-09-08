@@ -1,0 +1,126 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Section from '@bundu/ui/Section.astro';
+import SectionHeader from '@bundu/ui/SectionHeader.astro';
+import { Card } from '@bundu/ui/ui/card';
+import { Button } from '@bundu/ui/ui/button';
+import SovereigntyDiagram from '../../components/SovereigntyDiagram.astro';
+---
+<Layout
+  title="Blueprint — how Shamwari is built · Shamwari AI"
+  description="Cloud, Ground and Mind; the two rules that must not be broken; and where Shamwari sits in the Bundu Ecosystem."
+>
+  <Section space="tight">
+    <SectionHeader
+      as="h1"
+      size="display"
+      eyebrow="Blueprint"
+      title="How Shamwari is built"
+      description="Shamwari isn't one model behind an API — it's three, and which one answers a question depends on whose question it is."
+      max="max-w-2xl"
+    />
+  </Section>
+
+  <Section bg="secondary" border>
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+      <Card padding="lg">
+        <h2 class="font-serif text-h4 text-foreground">Cloud</h2>
+        <p class="mt-3 text-body-sm text-muted-foreground">
+          Runs on routed third-party models. Fast, general knowledge, no
+          persistent memory of you. Handles anything that isn't about your
+          own life.
+        </p>
+      </Card>
+      <Card padding="lg">
+        <h2 class="font-serif text-h4 text-foreground">Ground</h2>
+        <p class="mt-3 text-body-sm text-muted-foreground">
+          The Zimbabwean corpus — law, tax, regulation — kept fresh and cited
+          by section. What makes an answer <em>correct</em> instead of just
+          fluent.
+        </p>
+      </Card>
+      <Card padding="lg">
+        <h2 class="font-serif text-h4 text-foreground">Mind</h2>
+        <p class="mt-3 text-body-sm text-muted-foreground">
+          A small, open-weight model that runs on your own device. The only
+          thing that ever sees your personal data, because it never has to
+          leave.
+        </p>
+      </Card>
+    </div>
+  </Section>
+
+  <Section>
+    <SectionHeader eyebrow="Data sovereignty" title="The two rules that must not be broken" max="max-w-2xl" />
+    <SovereigntyDiagram class="mt-8">
+      A question about your own life is answered on your device by Shamwari
+      Mind. It is checked twice — once at the edge, once in the service that
+      owns the data — because a leak here isn't an outage, it's a broken
+      promise.
+    </SovereigntyDiagram>
+
+    <div class="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2">
+      <div class="card border-l-4 border-l-primary p-6">
+        <p class="flex items-baseline gap-3 font-semibold text-foreground">
+          <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-caption text-primary-foreground">1</span>
+          Your personal data never reaches a third-party model
+        </p>
+        <p class="mt-3 text-body-sm text-muted-foreground">
+          Not the cloud providers we route to, not anyone. If a question is
+          about your own life and the only available answer would mean
+          sending it to an outside model, Shamwari says so and stops — it
+          does not quietly answer with a shrug instead.
+        </p>
+      </div>
+      <div class="card border-l-4 border-l-primary p-6">
+        <p class="flex items-baseline gap-3 font-semibold text-foreground">
+          <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-caption text-primary-foreground">2</span>
+          Only open-weight output trains Shamwari Mind
+        </p>
+        <p class="mt-3 text-body-sm text-muted-foreground">
+          The model we train and give away is never built from output whose
+          licence forbids that. Every exchange is labelled the moment it's
+          generated, and the training pipeline physically cannot ingest
+          anything labelled otherwise.
+        </p>
+      </div>
+    </div>
+    <p class="mt-6">
+      <Button href="https://docs.shamwari.ai/rules/" external variant="ghost" arrow>
+        Read the full technical detail
+      </Button>
+    </p>
+  </Section>
+
+  <Section bg="secondary" border>
+    <SectionHeader eyebrow="Ground — the moat" title="Freshness beats volume" max="max-w-2xl" />
+    <p class="mt-6 max-w-2xl text-body text-muted-foreground">
+      A grounded small model beats an ungrounded large one on "what is the
+      current PAYE threshold" — because the large one is guessing from memory
+      and the small one is reading. Ground is a living corpus with an
+      effective date on every document, not a one-time scrape: when a
+      Statutory Instrument supersedes an older one, retrieval stops citing
+      the repealed version.
+    </p>
+    <p class="mt-4 max-w-2xl text-body text-muted-foreground">
+      What people actually ask becomes the roadmap for what we ingest next,
+      starting with law, then tax and monetary policy, then agriculture and
+      health once the sourcing is right.
+    </p>
+  </Section>
+
+  <Section>
+    <SectionHeader
+      eyebrow="Ecosystem"
+      title="Where Shamwari sits in the Bundu Ecosystem"
+      description="Bundu Foundation is a Zimbabwe-registered non-profit that holds the Shamwari IP and governs the wider ecosystem. Shamwari is sold commercially under Nyuchi Africa; the code itself stays Apache-2.0."
+      max="max-w-2xl"
+    />
+    <div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
+      <div class="card p-6"><h3 class="font-semibold text-foreground">Bundu Labs</h3><p class="mt-1 text-body-sm text-muted-foreground">Research.</p></div>
+      <div class="card p-6"><h3 class="font-semibold text-foreground">Mukoko</h3><p class="mt-1 text-body-sm text-muted-foreground">The consumer super-app — several sub-apps currently running in beta.</p></div>
+      <div class="card p-6"><h3 class="font-semibold text-foreground">Nyuchi Africa</h3><p class="mt-1 text-body-sm text-muted-foreground">The commercial pillar. Shamwari's paid tiers run here.</p></div>
+      <div class="card border-2 border-primary bg-sodalite-container p-6"><h3 class="font-semibold text-foreground">Shamwari AI</h3><p class="mt-1 text-body-sm text-muted-foreground">The community pillar — this site.</p></div>
+    </div>
+  </Section>
+</Layout>

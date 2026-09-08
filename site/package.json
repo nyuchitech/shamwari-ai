@@ -13,10 +13,18 @@
     "deploy": "astro build && wrangler deploy"
   },
   "dependencies": {
-    "astro": "^7.2.8"
+    "@astrojs/react": "^6.0.5",
+    "@bundu/ui": "^0.1.1",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.2.8",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
     "typescript": "^5.9.0",
     "wrangler": "^4.126.0"
   }

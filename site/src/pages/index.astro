@@ -1,295 +1,102 @@
 ---
-import Site from '../layouts/Site.astro';
+import Layout from '../layouts/Layout.astro';
+import Hero from '@bundu/ui/Hero.astro';
+import Section from '@bundu/ui/Section.astro';
+import SectionHeader from '@bundu/ui/SectionHeader.astro';
+import { Button } from '@bundu/ui/ui/button';
+import { Card } from '@bundu/ui/ui/card';
 import StatusPill from '../components/StatusPill.astro';
-import SovereigntyDiagram from '../components/SovereigntyDiagram.astro';
 ---
-<Site
+<Layout
   title="Shamwari AI — an African AI companion that cites its sources"
   description="Shamwari is an AI companion built in Zimbabwe. It answers in Shona, Ndebele and English, cites the actual statute instead of guessing, and is built so your personal data can never reach a cloud model."
 >
-  <section class="hero">
-    <p class="eyebrow">Community pillar of the Bundu Ecosystem</p>
-    <h1>A friend that serves; a friend that does not control.</h1>
-    <p class="standfirst">
-      Shamwari — Shona for <em>friend</em> — is an AI companion built in
-      Zimbabwe. It answers in Shona, Ndebele and English, cites the actual
-      provision of the actual statute instead of guessing, and is built so
-      that anything it knows about <em>you</em> specifically can never leave
-      your own device.
+  <Hero
+    subtitle="Community pillar of the Bundu Ecosystem"
+    title="A friend that serves; a friend that does not control."
+    description="Shamwari — Shona for friend — is an AI companion built in Zimbabwe. It answers in Shona, Ndebele and English, cites the actual provision of the actual statute instead of guessing, and is built so that anything it knows about you specifically can never leave your own device."
+    primaryCTA={{ text: 'Read the Blueprint', href: '/blueprint/' }}
+    secondaryCTA={{ text: 'See the Project', href: '/project/' }}
+  />
+
+  <Section bg="secondary" space="tight" border>
+    <blockquote class="max-w-2xl border-l-2 border-primary pl-5 font-serif text-h3 italic text-primary">
+      Shamwari cites the Statutory Instrument. ChatGPT guesses.
+    </blockquote>
+    <p class="mt-5 max-w-2xl text-body text-muted-foreground">
+      Zimbabwean law, tax thresholds and monetary policy change most months. A
+      model with that baked into its weights is stale the day it ships — and
+      it will answer confidently anyway. Shamwari retrieves the current text
+      before it answers and shows you where it came from.
     </p>
-    <div class="hero-actions">
-      <a class="button primary" href="https://docs.shamwari.ai">See how it's built</a>
-      <a class="button" href="#contact">Get in touch</a>
+  </Section>
+
+  <Section>
+    <SectionHeader
+      eyebrow="What it is"
+      title="One companion, three places it can run"
+      description="Which one answers a question depends on whose question it is — not on which plan you're paying for."
+    />
+    <div class="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
+      <Card>
+        <h3 class="font-serif text-h5 text-foreground">Cloud</h3>
+        <p class="mt-2 text-body-sm text-muted-foreground">
+          Routed third-party models. Fast, general knowledge, no persistent
+          memory of you.
+        </p>
+      </Card>
+      <Card>
+        <h3 class="font-serif text-h5 text-foreground">Ground</h3>
+        <p class="mt-2 text-body-sm text-muted-foreground">
+          The Zimbabwean corpus — law, tax, regulation — kept fresh and cited
+          by section.
+        </p>
+      </Card>
+      <Card>
+        <h3 class="font-serif text-h5 text-foreground">Mind</h3>
+        <p class="mt-2 text-body-sm text-muted-foreground">
+          A small, open-weight model on your own device — the only part that
+          ever sees anything personal.
+        </p>
+      </Card>
     </div>
-    <p class="hero-status"><StatusPill state="building" /> Pre-launch. We're building this in the open — see <a href="#status">where things actually stand</a>.</p>
-  </section>
-
-  <section class="wedge">
-    <blockquote>Shamwari cites the Statutory Instrument. ChatGPT guesses.</blockquote>
-    <p>
-      Zimbabwean law, tax thresholds and monetary policy change most months.
-      A model with that baked into its weights is stale the day it ships —
-      and it will answer confidently anyway, because it has no way to know
-      what it doesn't know. Shamwari retrieves the current text before it
-      answers and shows you where the answer came from. The citation isn't a
-      footnote. It's the product.
+    <p class="mt-8">
+      <Button href="/blueprint/" variant="ghost" arrow>Read the full blueprint</Button>
     </p>
-  </section>
+  </Section>
 
-  <section id="what-it-is" class="band">
-    <p class="eyebrow">What it is</p>
-    <h2>One companion, three places it can run</h2>
-    <p class="lede">
-      Shamwari isn't one model behind an API. It's three, and which one
-      answers a question depends on whose question it is — not on which
-      plan you're paying for.
-    </p>
-
-    <div class="grid-3">
-      <div class="card">
-        <h3>Cloud</h3>
-        <p>Runs on routed third-party models. Fast, general knowledge, no
-        persistent memory of you. Handles anything that isn't about your own
-        life.</p>
-      </div>
-      <div class="card">
-        <h3>Ground</h3>
-        <p>The Zimbabwean corpus — law, tax, regulation — kept fresh and
-        cited by section. What makes an answer <em>correct</em> instead of
-        just fluent.</p>
-      </div>
-      <div class="card">
-        <h3>Mind</h3>
-        <p>A small, open-weight model that runs on your own device. The only
-        thing that ever sees your personal data, because it never has to
-        leave.</p>
-      </div>
-    </div>
-
-    <SovereigntyDiagram>
-      A question about your own life is answered on your device by Shamwari
-      Mind. It is checked twice — once at the edge, once in the service that
-      owns the data — because a leak here isn't an outage, it's a broken
-      promise.
-    </SovereigntyDiagram>
-
-    <div class="rule">
-      <p class="rule-title"><span class="rule-n">1</span> Your personal data never reaches a third-party model</p>
-      <p>Not the cloud providers we route to, not anyone. If a question is
-      about your own life and the only available answer would mean sending
-      it to an outside model, Shamwari says so and stops — it does not
-      quietly answer with a shrug instead. An honest "I can't help with that
-      here" beats a confident answer that leaves something out.</p>
-    </div>
-    <div class="rule">
-      <p class="rule-title"><span class="rule-n">2</span> Only open-weight output trains Shamwari Mind</p>
-      <p>The model we train and give away is never built from output whose
-      licence forbids that. Every exchange is labelled the moment it's
-      generated, and the training pipeline physically cannot ingest anything
-      labelled otherwise.</p>
-    </div>
-    <p class="more-link"><a href="https://docs.shamwari.ai/rules/">Read the full detail, including how each rule is enforced in code →</a></p>
-  </section>
-
-  <section class="band alt">
-    <p class="eyebrow">Ground — the moat</p>
-    <h2>Freshness beats volume</h2>
-    <p class="lede">
-      A grounded small model beats an ungrounded large one on "what is the
-      current PAYE threshold" — because the large one is guessing from
-      memory and the small one is reading. We're building Ground as a living
-      corpus with an effective date on every document, not a one-time
-      scrape: when a Statutory Instrument supersedes an older one, retrieval
-      stops citing the repealed version.
-    </p>
-    <p class="lede">
-      What people actually ask becomes the roadmap for what we ingest next,
-      starting with law, then tax and monetary policy, then agriculture and
-      health once the sourcing is right.
-    </p>
-  </section>
-
-  <section id="ecosystem" class="band">
-    <p class="eyebrow">Ecosystem</p>
-    <h2>Where Shamwari sits in the Bundu Ecosystem</h2>
-    <p class="lede">
-      Bundu Foundation is a Zimbabwe-registered non-profit that holds the
-      Shamwari IP and governs the wider ecosystem. Shamwari is sold
-      commercially under Nyuchi Africa; the code itself stays Apache-2.0.
-    </p>
-    <div class="grid-2">
-      <div class="card outline">
-        <h3>Bundu Labs</h3>
-        <p>Research.</p>
-      </div>
-      <div class="card outline">
-        <h3>Mukoko</h3>
-        <p>The consumer super-app — several sub-apps currently running in
-        beta across Africa.</p>
-      </div>
-      <div class="card outline">
-        <h3>Nyuchi Africa</h3>
-        <p>The commercial pillar. Shamwari's paid tiers, and the wider
-        Nyuchi product and services business, run here.</p>
-      </div>
-      <div class="card outline highlight">
-        <h3>Shamwari AI</h3>
-        <p>The community pillar — this site. Free and open-weight at its
-        core, because that's the version of the promise worth making.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="band alt">
-    <p class="eyebrow">Who it's for</p>
-    <h2>Four ways to use it</h2>
-    <div class="tiers">
-      <div class="tier">
-        <h3>Community</h3>
-        <p class="tier-entity">Bundu Foundation</p>
-        <p>Shamwari Mind, downloadable, open weights, forever free. This is
-        the community pillar — not a trial of something else.</p>
-      </div>
-      <div class="tier">
-        <h3>Developer</h3>
-        <p class="tier-entity">Nyuchi Africa</p>
-        <p>Pay-as-you-go API access to Shamwari Cloud, routed to the models
-        that fit each request.</p>
-      </div>
-      <div class="tier">
-        <h3>Business</h3>
-        <p class="tier-entity">Nyuchi Africa</p>
-        <p>Committed monthly volume, an SLA, and usage dashboards for teams
-        building on top of Shamwari.</p>
-      </div>
-      <div class="tier">
-        <h3>Sovereign</h3>
-        <p class="tier-entity">Nyuchi Africa</p>
-        <p>Mind and Ground deployed on your own infrastructure. No data
-        leaves it, ever — for a ministry, a bank, or anyone else who needs
-        that in writing.</p>
-      </div>
-    </div>
-    <p class="lede small">
-      We're inviting early customers in by hand rather than opening self-serve
-      billing yet — see <a href="#contact">get in touch</a> below.
-    </p>
-  </section>
-
-  <section id="status" class="band">
-    <p class="eyebrow">Where we are</p>
-    <h2>Built in the open, honestly labelled</h2>
-    <p class="lede">
-      We'd rather this page be a little less impressive and stay true than
-      round anything up. Here's what's actually running today versus what's
-      still ahead.
-    </p>
-    <ul class="status-list">
-      <li><StatusPill state="live" /> <strong>The architecture, in writing.</strong> <a href="https://docs.shamwari.ai">docs.shamwari.ai</a> documents exactly how routing, sovereignty and citation work, and it's checked against the real code.</li>
-      <li><StatusPill state="live" /> <strong>Data sovereignty enforcement.</strong> The two rules above are live in code, enforced at more than one layer, and covered by tests — not policy on a page.</li>
-      <li><StatusPill state="live" /> <strong>Ground's storage and search.</strong> The database and search indexes behind retrieval are running and ready.</li>
-      <li><StatusPill state="building" /> <strong>The Zimbabwean legal and tax corpus.</strong> Sources are being reviewed and approved one at a time — we ingest what we have the rights to, nothing scraped first and asked about later. The Constitution of Zimbabwe is first in.</li>
-      <li><StatusPill state="building" /> <strong>Shamwari Cloud.</strong> The gateway and API are written and tested, and not yet serving production traffic.</li>
-      <li><StatusPill state="planned" /> <strong>Shamwari Mind.</strong> The on-device, open-weight model — the part that makes the sovereignty promise real for everyday use, not just for the API.</li>
-      <li><StatusPill state="planned" /> <strong>Voice and image.</strong> Including Shona and Ndebele speech, once a provider actually supports them well.</li>
+  <Section bg="secondary" border>
+    <SectionHeader
+      eyebrow="Where we are"
+      title="Built in the open, honestly labelled"
+      description="We'd rather this page be a little less impressive and stay true than round anything up."
+    />
+    <ul class="mt-8 flex max-w-2xl flex-col gap-4">
+      <li class="flex flex-wrap items-baseline gap-3">
+        <StatusPill state="live" /> <span class="text-body text-foreground">The architecture, documented and enforced in code.</span>
+      </li>
+      <li class="flex flex-wrap items-baseline gap-3">
+        <StatusPill state="building" /> <span class="text-body text-foreground">The Zimbabwean legal and tax corpus — starting with the Constitution of Zimbabwe.</span>
+      </li>
+      <li class="flex flex-wrap items-baseline gap-3">
+        <StatusPill state="planned" /> <span class="text-body text-foreground">Shamwari Mind, the on-device model.</span>
+      </li>
     </ul>
-  </section>
-
-  <section id="contact" class="band alt contact">
-    <p class="eyebrow">Get in touch</p>
-    <h2>Talk to us before you talk to a consultant</h2>
-    <p class="lede">
-      We're bringing on the first customers by hand — mostly around
-      Zimbabwean tax and regulatory compliance, where being wrong costs real
-      money and the answer changes monthly. If that's you, if you want early
-      access to Ground once it opens up, or if you're a Zimbabwean legal or
-      language source who wants to talk about a licence, say hello.
+    <p class="mt-8">
+      <Button href="/project/" variant="ghost" arrow>See the full project page</Button>
     </p>
-    <a class="button primary large" href="mailto:hello@shamwari.ai">hello@shamwari.ai</a>
-  </section>
-</Site>
+  </Section>
 
-<style>
-  section { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; }
-  .eyebrow {
-    margin: 0 0 0.85rem; font-size: 0.7rem; font-weight: 600;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--sodalite);
-  }
-  h2 {
-    font-family: var(--serif); font-weight: 600;
-    font-size: clamp(1.5rem, 3.4vw, 2rem); line-height: 1.2;
-    letter-spacing: -0.015em; color: var(--ink); margin: 0 0 1rem; text-wrap: balance;
-  }
-  h3 {
-    font-family: var(--sans); font-weight: 600; font-size: 1.02rem;
-    color: var(--ink); margin: 0 0 0.5rem;
-  }
-  .lede { max-width: var(--measure); color: var(--text); margin: 0 0 1.25rem; }
-  .lede.small { font-size: 0.92rem; color: var(--granite); }
-
-  .hero { padding: 4rem 1.5rem 3rem; }
-  .hero h1 {
-    font-family: var(--serif); font-weight: 400;
-    font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.12;
-    letter-spacing: -0.02em; color: var(--ink); margin: 0.3rem 0 1.1rem;
-    max-width: 20ch; text-wrap: balance;
-  }
-  .standfirst { max-width: var(--measure); font-size: 1.15rem; color: var(--granite); margin: 0 0 1.75rem; }
-  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
-  .hero-status { font-size: 0.92rem; color: var(--granite); display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
-
-  .button {
-    display: inline-block; text-decoration: none; font-weight: 600; font-size: 0.95rem;
-    padding: 0.7em 1.3em; border-radius: 3px; border: 1px solid var(--hairline);
-    color: var(--ink); background: var(--surface);
-  }
-  .button:hover { border-color: var(--sodalite); color: var(--sodalite); }
-  .button.primary { background: var(--sodalite); border-color: var(--sodalite); color: var(--surface); }
-  .button.primary:hover { background: var(--ink); border-color: var(--ink); color: var(--surface); }
-  .button.large { font-size: 1.05rem; padding: 0.85em 1.6em; }
-
-  .wedge { padding: 1rem 1.5rem 3.5rem; }
-  .wedge blockquote {
-    margin: 0 0 1.25rem; padding-left: 1.1rem; border-left: 2px solid var(--sodalite);
-    font-family: var(--serif); font-style: italic; font-size: 1.4rem;
-    color: var(--sodalite); max-width: 34ch;
-  }
-  .wedge p { max-width: var(--measure); color: var(--text); margin: 0; }
-
-  .band { padding: 3.5rem 1.5rem; }
-  .band.alt { background: var(--surface); max-width: 100%; }
-  .band.alt > * { max-width: 72rem; margin-left: auto; margin-right: auto; }
-
-  .grid-3 { display: grid; gap: 1.25rem; grid-template-columns: 1fr; margin-bottom: 2.25rem; }
-  .grid-2 { display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
-  @media (min-width: 42rem) {
-    .grid-3 { grid-template-columns: repeat(3, 1fr); }
-    .grid-2 { grid-template-columns: repeat(2, 1fr); }
-  }
-  .card { padding: 1.4rem; border: 1px solid var(--hairline); border-radius: 4px; background: var(--surface); }
-  .card p { margin: 0; color: var(--text); font-size: 0.95rem; }
-  .card.outline { background: transparent; }
-  .card.outline.highlight { border-color: var(--sodalite); background: var(--sodalite-q); }
-
-  .rule { max-width: var(--measure); margin: 0 0 1.25rem; padding: 1.1rem 1.3rem; border: 1px solid var(--hairline); border-left: 3px solid var(--sodalite); border-radius: 2px; }
-  .rule-title { margin: 0 0 0.4rem; font-weight: 600; color: var(--ink); display: flex; align-items: baseline; gap: 0.6rem; }
-  .rule-n {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 1.4em; height: 1.4em; border-radius: 50%; background: var(--sodalite); color: var(--surface);
-    font-size: 0.8rem; flex-shrink: 0;
-  }
-  .rule p:last-child { margin: 0; color: var(--text); font-size: 0.95rem; }
-  .more-link { font-size: 0.92rem; }
-
-  .tiers { display: grid; gap: 1.25rem; grid-template-columns: 1fr; margin-bottom: 1.25rem; }
-  @media (min-width: 50rem) { .tiers { grid-template-columns: repeat(4, 1fr); } }
-  .tier { padding: 1.4rem; border: 1px solid var(--hairline); border-radius: 4px; background: var(--paper); }
-  .tier-entity { margin: 0 0 0.6rem; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--granite); }
-  .tier p:last-child { margin: 0; font-size: 0.92rem; color: var(--text); }
-
-  .status-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.9rem; max-width: var(--measure); }
-  .status-list li { display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; color: var(--text); }
-  .status-list strong { color: var(--ink); }
-
-  .contact { text-align: left; }
-</style>
+  <Section space="loose">
+    <SectionHeader
+      align="center"
+      eyebrow="Get in touch"
+      title="Talk to us before you talk to a consultant"
+      description="We're bringing on the first customers by hand — mostly around Zimbabwean tax and regulatory compliance, where being wrong costs real money and the answer changes monthly."
+      max="max-w-xl"
+    />
+    <div class="mt-8 flex justify-center">
+      <Button href="/contact/" size="lg" arrow>Get in touch</Button>
+    </div>
+  </Section>
+</Layout>
