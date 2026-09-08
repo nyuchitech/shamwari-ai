@@ -5,7 +5,9 @@ import SectionHeader from '@bundu/ui/SectionHeader.astro';
 import { Button } from '@bundu/ui/ui/button';
 import StatusPill from '../../components/StatusPill.astro';
 
-const status: { state: 'live' | 'building' | 'planned'; title: string; body: string }[] = [
+const REPO = 'https://github.com/bundu-labs/shamwari';
+
+const status: { state: 'live' | 'building' | 'planned'; title: string; body: string; issues?: number[] }[] = [
   {
     state: 'live',
     title: 'The architecture, in writing',
@@ -25,21 +27,25 @@ const status: { state: 'live' | 'building' | 'planned'; title: string; body: str
     state: 'building',
     title: 'The Zimbabwean legal and tax corpus',
     body: 'Sources are being reviewed and approved one at a time — we ingest what we have the rights to, nothing scraped first and asked about later. The Constitution of Zimbabwe is first in.',
+    issues: [17, 18],
   },
   {
     state: 'building',
     title: 'Shamwari Cloud',
     body: 'The gateway and API are written and tested, and not yet serving production traffic.',
+    issues: [19],
   },
   {
     state: 'planned',
     title: 'Shamwari Mind',
     body: 'The on-device, open-weight model — the part that makes the sovereignty promise real for everyday use, not just for the API.',
+    issues: [20],
   },
   {
     state: 'planned',
     title: 'Voice and image',
     body: 'Including Shona and Ndebele speech, once a provider actually supports them well.',
+    issues: [21],
   },
 ];
 
@@ -60,7 +66,7 @@ const tiers = [
       size="display"
       eyebrow="Project"
       title="Where things actually stand"
-      description="We'd rather this page be a little less impressive and stay true than round anything up."
+      description="We'd rather this page be a little less impressive and stay true than round anything up. Every item below is tracked in the open on GitHub — not just described here."
       max="max-w-2xl"
     />
   </Section>
@@ -74,9 +80,21 @@ const tiers = [
             <span class="font-semibold text-foreground">{item.title}</span>
           </div>
           <p class="text-body-sm text-muted-foreground">{item.body}</p>
+          {item.issues && (
+            <p class="flex flex-wrap gap-3 text-body-sm">
+              {item.issues.map((n) => (
+                <a href={`${REPO}/issues/${n}`} target="_blank" rel="noopener noreferrer" class="text-primary underline underline-offset-2">
+                  Track #{n} on GitHub ↗
+                </a>
+              ))}
+            </p>
+          )}
         </li>
       ))}
     </ul>
+    <p class="mt-8 max-w-2xl text-body-sm text-muted-foreground">
+      Full backlog: <a href={`${REPO}/issues`} target="_blank" rel="noopener noreferrer" class="text-primary underline underline-offset-2">github.com/bundu-labs/shamwari/issues</a>.
+    </p>
   </Section>
 
   <Section>

@@ -103,10 +103,79 @@ import SovereigntyDiagram from '../../components/SovereigntyDiagram.astro';
       the repealed version.
     </p>
     <p class="mt-4 max-w-2xl text-body text-muted-foreground">
-      What people actually ask becomes the roadmap for what we ingest next,
-      starting with law, then tax and monetary policy, then agriculture and
-      health once the sourcing is right.
+      What people actually ask becomes the roadmap for what we ingest next —
+      <code class="rounded bg-sodalite-container px-1.5 py-0.5 text-body-sm text-sodalite-on-container">shamwari.groundMisses</code>
+      logs every question Ground couldn't answer, so the corpus roadmap is
+      written by the people asking, not by guesswork.
     </p>
+    <ol class="mt-6 max-w-2xl list-decimal space-y-2 pl-5 text-body-sm text-muted-foreground">
+      <li><strong class="text-foreground">Law</strong> — the Constitution (approved, first in), ZimLII, Veritas, Parliament</li>
+      <li><strong class="text-foreground">Economy</strong> — ZIMRA, RBZ, ZIMSTAT, Ministry of Finance</li>
+      <li><strong class="text-foreground">Verticals</strong> — AGRITEX, MoHCC, ZIMSEC (licence required)</li>
+      <li><strong class="text-foreground">Language</strong> — Masakhane, Common Voice, VOA, UZ ALRI partnership</li>
+    </ol>
+    <p class="mt-6 max-w-2xl text-body-sm text-muted-foreground">
+      Five sources are blocked pending licence review — nothing gets scraped
+      first and asked about later. See
+      <a href="https://github.com/bundu-labs/shamwari/issues/18" target="_blank" rel="noopener noreferrer" class="text-primary underline underline-offset-2">the open issue</a>
+      tracking that.
+    </p>
+  </Section>
+
+  <Section>
+    <SectionHeader
+      eyebrow="Mind"
+      title="How the model we give away gets trained"
+      description="Distillation, not fine-tuning from scratch — and the one step in this pipeline that's the actual asset."
+      max="max-w-2xl"
+    />
+    <ol class="mt-8 max-w-2xl space-y-5">
+      <li class="flex gap-4">
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-body-sm font-semibold text-primary-foreground">1</span>
+        <p class="text-body-sm text-muted-foreground"><strong class="text-foreground">Seed</strong> question/answer pairs from Ground documents.</p>
+      </li>
+      <li class="flex gap-4">
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-body-sm font-semibold text-primary-foreground">2</span>
+        <p class="text-body-sm text-muted-foreground"><strong class="text-foreground">Generate</strong> candidates in Shona, Ndebele, Zimbabwean English and code-switched registers with Kimi K3 and Qwen — never Claude or GPT, whose terms bar using their output to train a competing model.</p>
+      </li>
+      <li class="flex gap-4">
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-body-sm font-semibold text-primary-foreground">3</span>
+        <p class="text-body-sm text-muted-foreground"><strong class="text-foreground">Correct</strong> with paid human annotators. This is the irreplaceable part: Shamwari employs Zimbabweans to teach an AI Zimbabwe.</p>
+      </li>
+      <li class="flex gap-4">
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-body-sm font-semibold text-primary-foreground">4</span>
+        <p class="text-body-sm text-muted-foreground"><strong class="text-foreground">Train</strong> with QLoRA on Qwen 4B — an Apache-2.0 base, so Mind is genuinely open: weights, data recipe and eval suite all publishable.</p>
+      </li>
+      <li class="flex gap-4">
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-body-sm font-semibold text-primary-foreground">5</span>
+        <p class="text-body-sm text-muted-foreground"><strong class="text-foreground">Quantize</strong> to q4, targeting a ~US$120 Android device.</p>
+      </li>
+    </ol>
+    <p class="mt-6 max-w-2xl text-body-sm text-muted-foreground">
+      ShamwariBench — a Zimbabwean law, tax, agriculture, health, Shona and
+      Ndebele fluency benchmark — gets built and published <em>before</em>
+      training starts. Whoever owns the benchmark owns the argument about
+      who's actually best at African languages.
+    </p>
+    <p class="mt-6">
+      <Button href="https://github.com/bundu-labs/shamwari/issues/20" external variant="ghost" arrow>
+        Track Mind on GitHub
+      </Button>
+    </p>
+  </Section>
+
+  <Section bg="secondary" border>
+    <SectionHeader eyebrow="Cloud economics" title="Where the margin actually comes from" max="max-w-2xl" />
+    <p class="mt-6 max-w-2xl text-body text-muted-foreground">
+      AI Gateway passes provider pricing through at cost — there's no margin
+      in simply reselling access, since anyone could go direct and undercut
+      it. Margin gets built from three places instead:
+    </p>
+    <ul class="mt-6 max-w-2xl list-disc space-y-2 pl-5 text-body-sm text-muted-foreground">
+      <li><strong class="text-foreground">Route the bulk to cheap models.</strong> Qwen and DeepSeek handle most traffic; Kimi K3 for reasoning and long context; premium models are opt-in only. Target: at least 70% of tokens on the economy tier.</li>
+      <li><strong class="text-foreground">Cache hard.</strong> Exact-match caching is free on AI Gateway, and in a market where thousands of people ask near-identical questions about ZIMRA thresholds, that hit rate should be high.</li>
+      <li><strong class="text-foreground">Let Ground do the lifting.</strong> A grounded 4B answer beats an ungrounded 400B answer on a question with a factual, checkable answer. Correct answers from cheap models is the whole game.</li>
+    </ul>
   </Section>
 
   <Section>
