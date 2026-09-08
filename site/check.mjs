@@ -1,6 +1,6 @@
 // Post-build checks on dist/. Astro covers types; these are the things it
 // cannot know about. Modelled on docs-site/check.mjs.
-import { readFileSync, statSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 const walk = (dir) =>
@@ -19,9 +19,12 @@ const assets = new Set(files.map((f) => f.replace(/^dist/, '')));
 // The one permitted family of uses: naming the phrase in order to reject it.
 const PERMITTED = ['not the same as being open source', 'Say open weights, not open source'];
 
+let biggest = 0;
+
 for (const page of pages) {
   const html = readFileSync(page, 'utf8');
   const where = page.replace(/^dist\//, '') || 'index.html';
+  biggest = Math.max(biggest, Buffer.byteLength(html, 'utf8'));
 
   // Internal page links resolve to a route that was actually built. Asset
   // paths are checked against the file list instead.
@@ -33,19 +36,25 @@ for (const page of pages) {
     const norm = href.endsWith('/') ? href : href + '/';
     if (!routes.has(norm)) fail.push(`${where}: dead link ${href}`);
   }
+  const ids = new Set([...html.matchAll(/id="([^"]+)"/g)].map((m) => m[1]));
   for (const [, id] of html.matchAll(/href="#([^"]+)"/g)) {
-    if (!new RegExp(`id="${id}"`).test(html)) fail.push(`${where}: dead anchor #${id}`);
+    if (!ids.has(id)) fail.push(`${where}: dead anchor #${id}`);
+  }
+
+  // og:image / twitter:image resolve to a real file too — a dead social
+  // preview image fails silently on every platform that would show it.
+  for (const [, url] of html.matchAll(/(?:property="og:image"|name="twitter:image") content="([^"]+)"/g)) {
+    const assetPath = new URL(url).pathname;
+    if (!assets.has(assetPath)) fail.push(`${where}: missing social preview image ${assetPath}`);
   }
 
   // Language discipline from CLAUDE.md, mirrored from docs-site.
   const flat = html.replace(/\s+/g, ' ');
-  for (let i = flat.search(/open[ -]sourc/i); i !== -1; ) {
-    const ctx = flat.slice(Math.max(0, i - 90), i + 90);
+  for (const m of flat.matchAll(/open[ -]sourc/gi)) {
+    const ctx = flat.slice(Math.max(0, m.index - 90), m.index + 90);
     if (!PERMITTED.some((ok) => ctx.includes(ok))) {
       fail.push(`${where}: says "open source" outside the rule that forbids it — …${ctx.slice(60, 150)}…`);
     }
-    const next = flat.slice(i + 10).search(/open[ -]sourc/i);
-    i = next === -1 ? -1 : i + 10 + next;
   }
   // "your data stays in Africa" / national-sovereignty framing is banned for
   // Cloud — sovereignty on this site means user-sovereign, never residency.
@@ -62,7 +71,6 @@ for (const page of pages) {
 }
 
 // The audience is assumed to be on a slow connection.
-const biggest = Math.max(...pages.map((p) => statSync(p).size));
 if (biggest > 51_200) fail.push(`largest page is ${biggest} bytes, over the 50KB budget`);
 
 if (fail.length) {

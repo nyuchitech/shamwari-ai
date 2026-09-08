@@ -3,51 +3,10 @@ import Layout from '../../layouts/Layout.astro';
 import Section from '@bundu/ui/Section.astro';
 import SectionHeader from '@bundu/ui/SectionHeader.astro';
 import { Button } from '@bundu/ui/ui/button';
+import { Card } from '@bundu/ui/ui/card';
 import StatusPill from '../../components/StatusPill.astro';
-
-const REPO = 'https://github.com/bundu-labs/shamwari';
-
-const status: { state: 'live' | 'building' | 'planned'; title: string; body: string; issues?: number[] }[] = [
-  {
-    state: 'live',
-    title: 'The architecture, in writing',
-    body: 'docs.shamwari.ai documents exactly how routing, sovereignty and citation work, and it’s checked against the real code.',
-  },
-  {
-    state: 'live',
-    title: 'Data sovereignty enforcement',
-    body: 'The two rules on the Blueprint page are live in code, enforced at more than one layer, and covered by tests — not policy on a page.',
-  },
-  {
-    state: 'live',
-    title: "Ground's storage and search",
-    body: 'The database and search indexes behind retrieval are running and ready.',
-  },
-  {
-    state: 'building',
-    title: 'The Zimbabwean legal and tax corpus',
-    body: 'Sources are being reviewed and approved one at a time — we ingest what we have the rights to, nothing scraped first and asked about later. The Constitution of Zimbabwe is first in.',
-    issues: [17, 18],
-  },
-  {
-    state: 'building',
-    title: 'Shamwari Cloud',
-    body: 'The gateway and API are written and tested, and not yet serving production traffic.',
-    issues: [19],
-  },
-  {
-    state: 'planned',
-    title: 'Shamwari Mind',
-    body: 'The on-device, open-weight model — the part that makes the sovereignty promise real for everyday use, not just for the API.',
-    issues: [20],
-  },
-  {
-    state: 'planned',
-    title: 'Voice and image',
-    body: 'Including Shona and Ndebele speech, once a provider actually supports them well.',
-    issues: [21],
-  },
-];
+import { STATUS, issueUrl } from '../../data/status';
+import { REPO } from '../../lib/site';
 
 const tiers = [
   { name: 'Community', entity: 'Bundu Foundation', body: 'Shamwari Mind, downloadable, open weights, forever free. This is the community pillar — not a trial of something else.' },
@@ -73,7 +32,7 @@ const tiers = [
 
   <Section bg="secondary" border>
     <ul class="flex max-w-2xl flex-col gap-6">
-      {status.map((item) => (
+      {STATUS.map((item) => (
         <li class="flex flex-col gap-1.5">
           <div class="flex flex-wrap items-baseline gap-3">
             <StatusPill state={item.state} />
@@ -83,7 +42,7 @@ const tiers = [
           {item.issues && (
             <p class="flex flex-wrap gap-3 text-body-sm">
               {item.issues.map((n) => (
-                <a href={`${REPO}/issues/${n}`} target="_blank" rel="noopener noreferrer" class="text-primary underline underline-offset-2">
+                <a href={issueUrl(n)} target="_blank" rel="noopener noreferrer" class="text-primary underline underline-offset-2">
                   Track #{n} on GitHub ↗
                 </a>
               ))}
@@ -101,11 +60,11 @@ const tiers = [
     <SectionHeader eyebrow="Who it's for" title="Four ways to use it" max="max-w-2xl" />
     <div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {tiers.map((tier) => (
-        <div class="card p-6">
+        <Card>
           <h3 class="font-semibold text-foreground">{tier.name}</h3>
           <p class="mt-1 text-caption font-semibold uppercase tracking-wide text-muted-foreground">{tier.entity}</p>
           <p class="mt-3 text-body-sm text-muted-foreground">{tier.body}</p>
-        </div>
+        </Card>
       ))}
     </div>
     <p class="mt-6 max-w-2xl text-body-sm text-muted-foreground">

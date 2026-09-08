@@ -80,6 +80,37 @@ claims Cloud keeps data "in Africa" — both are language-discipline rules from
 the root `CLAUDE.md`, and a marketing page is the one most likely to slip on
 them by accident.
 
+## Brand assets
+
+`public/favicon.png`, `public/apple-touch-icon.png`, `public/shamwari-icon.png`
+and `public/og/*.png` are all generated, not hand-drawn — see
+`scripts/brand-assets/`:
+
+- **The mark itself** — the node-graph icon — is Bundu's own brand mark
+  (`scripts/brand-assets/source/bundu-node-mark-{light,dark}.svg`), recoloured
+  from Bundu's terracotta to Shamwari's sodalite. The source SVGs are a
+  masked raster embed, not flat vector paths, so recolouring can't be a
+  `fill` edit: `recolor-mark.mjs` renders the SVG, recovers each pixel's
+  coverage by un-mixing it from the known background and original colour,
+  then recomposites at any target colour — exact anti-aliasing, not a
+  nearest-colour swap. Run `node recolor-mark.mjs <hex> <out-prefix>` to
+  reproduce or retarget it (e.g. for a future brand refresh).
+- **`public/shamwari-mark-cream.png`** is the same mark recoloured to
+  `--canvas`, for use on the dark `og/*.png` backgrounds.
+- **`public/og/*.png`** (1200×630, one per page) are built by
+  `generate-og-images.mjs` from `og-template.html`: the sodalite background,
+  the mark + wordmark together top-left, the page's eyebrow/title/description,
+  the page URL bottom-left, and a solid (never faded-to-transparent) honeycomb
+  cluster in the seven heritage tones, density-tapered so it thins out toward
+  the text rather than stopping at a hard edge — the text rectangle itself is
+  a hard exclusion zone, which is what actually keeps it legible. Re-run this
+  whenever a page's title/description changes.
+
+Both scripts need `playwright` (`npx playwright install chromium` on a normal
+machine; this sandbox pre-installs one at a fixed path, hence the
+`PLAYWRIGHT_CHROMIUM_PATH` escape hatch in both scripts) and `sharp` — both
+devDependencies.
+
 ## Keeping this honest
 
 Every status claim on `/project/` (what's live, what's building, what's
