@@ -36,7 +36,7 @@ src/layouts/Layout.astro        <head>, MineralStrip, Header, Breadcrumb, Footer
 src/components/Header.astro     nav — local, @bundu/ui ships no Header/Footer
 src/components/Footer.astro     sitemap + ecosystem links + legal line
 src/components/StatusPill.astro live / building / planned, on the mineral tokens
-src/components/SovereigntyDiagram.astro  the "no line to the cloud" diagram
+src/components/GateDiagram.astro the scope-gate pipeline diagram
 src/styles/global.css           @import tailwindcss + @bundu/ui/styles/globals.css
 src/styles/brand-shamwari.css   --primary/--ring -> sodalite (see below)
 tailwind.config.mjs             @bundu/ui/tailwind-preset, this site's content glob

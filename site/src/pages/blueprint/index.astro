@@ -4,7 +4,7 @@ import Section from '@bundu/ui/Section.astro';
 import SectionHeader from '@bundu/ui/SectionHeader.astro';
 import { Card } from '@bundu/ui/ui/card';
 import { Button } from '@bundu/ui/ui/button';
-import SovereigntyDiagram from '../../components/SovereigntyDiagram.astro';
+import GateDiagram from '../../components/GateDiagram.astro';
 import NumberBadge from '../../components/NumberBadge.astro';
 import { REPO } from '../../lib/site';
 
@@ -80,12 +80,15 @@ const ecosystem = [
 
   <Section>
     <SectionHeader eyebrow="Data sovereignty" title="The two rules that must not be broken" max="max-w-2xl" />
-    <SovereigntyDiagram class="mt-8">
-      A question about your own life is answered on your device by Shamwari
-      Mind. It is checked twice — once at the edge, once in the service that
-      owns the data — because a leak here isn't an outage, it's a broken
-      promise.
-    </SovereigntyDiagram>
+    <div class="mt-8">
+      <GateDiagram />
+      <p class="mt-4 max-w-2xl text-body-sm text-muted-foreground">
+        A question about your own life is answered on your device by Shamwari
+        Mind. It is checked twice — once at the edge, once in the service
+        that owns the data — because a leak here isn't an outage, it's a
+        broken promise.
+      </p>
+    </div>
 
     <div class="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2">
       {rules.map((rule, i) => (
