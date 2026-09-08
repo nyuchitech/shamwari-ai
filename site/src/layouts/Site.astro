@@ -1,0 +1,98 @@
+---
+import '../styles/tokens.css';
+
+interface Props { title: string; description: string }
+const { title, description } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={Astro.site} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap"
+  />
+</head>
+<body>
+  <header class="masthead">
+    <div class="inner">
+      <a class="wordmark" href="/">Shamwari <span>AI</span></a>
+      <nav aria-label="Primary">
+        <a href="#what-it-is">What it is</a>
+        <a href="#ecosystem">Ecosystem</a>
+        <a href="#status">Where we are</a>
+        <a href="https://docs.shamwari.ai">Documentation</a>
+        <a href="#contact" class="cta">Get in touch</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer>
+    <div class="inner">
+      <p>
+        Shamwari is Shona for <em>friend</em>. The community pillar of the
+        Bundu Ecosystem — Bundu Foundation intellectual property, sold
+        commercially under Nyuchi Africa.
+      </p>
+      <p>
+        Platform code is Apache-2.0. Third-party model terms and per-source
+        corpus licences are recorded separately and are not covered by ours.
+        Read how it's built at <a href="https://docs.shamwari.ai">docs.shamwari.ai</a>.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
+
+<style>
+  .masthead {
+    border-bottom: 1px solid var(--hairline);
+    background: var(--surface);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .inner {
+    max-width: 72rem; margin: 0 auto; padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .wordmark {
+    display: inline-flex; align-items: baseline; gap: 0.5rem;
+    font-family: var(--serif); font-size: 1.35rem; font-weight: 600;
+    color: var(--ink); letter-spacing: -0.01em; text-decoration: none;
+  }
+  .wordmark span {
+    font-family: var(--sans); font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--sodalite);
+  }
+  .masthead nav { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+  .masthead nav a {
+    font-size: 0.92rem; color: var(--granite); text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .masthead nav a:hover { color: var(--sodalite); border-bottom-color: var(--sodalite); }
+  .masthead nav a.cta {
+    color: var(--surface); background: var(--sodalite);
+    padding: 0.45em 0.9em; border-radius: 3px; font-weight: 600;
+  }
+  .masthead nav a.cta:hover { background: var(--ink); border-bottom-color: transparent; }
+
+  footer {
+    border-top: 1px solid var(--hairline); background: var(--surface);
+    color: var(--granite); font-size: 0.9rem;
+  }
+  footer .inner { display: block; padding: 2rem 1.5rem; }
+  footer p { max-width: var(--measure); }
+  footer p:last-child { margin-bottom: 0; }
+</style>

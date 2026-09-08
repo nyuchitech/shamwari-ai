@@ -1,0 +1,23 @@
+{
+  "name": "shamwari-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "shamwari.ai — the public landing page",
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "wrangler dev",
+    "check": "astro check && node check.mjs",
+    "deploy": "astro build && wrangler deploy"
+  },
+  "dependencies": {
+    "astro": "^7.2.8"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^5.9.0",
+    "wrangler": "^4.126.0"
+  }
+}

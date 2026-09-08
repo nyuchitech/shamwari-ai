@@ -1,0 +1,23 @@
+---
+/** A three-state indicator for what's actually built vs. what's planned.
+    Colour alone never carries the meaning — the label always says it too. */
+interface Props { state: 'live' | 'building' | 'planned' }
+const { state } = Astro.props;
+const label = { live: 'Live', building: 'Building', planned: 'Planned' }[state];
+---
+<span class:list={['pill', state]}>{label}</span>
+<style>
+  .pill {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.22em 0.6em;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .live     { background: var(--sodalite-q); color: var(--sodalite); }
+  .building { background: var(--ochre-q);    color: var(--ochre); }
+  .planned  { background: transparent; color: var(--granite); border: 1px solid var(--hairline); }
+</style>
